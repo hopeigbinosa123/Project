@@ -1,0 +1,46 @@
+/* The provided CSS code snippet is defining styles for a product list page layout. Here's a breakdown
+of what each part of the code is doing: */
+
+.product-List-page{
+    padding: 20px;
+}
+
+.filter-input{
+    margin-bottom: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    width: 100%;
+    max-width: 400px;
+}
+
+.product-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/*Styles for tablet devices */
+
+@media (max-width: 768px) {
+    .product-grid {
+        flex-direction: column;
+    }
+}
+
+/* Styles for mobile devices */
+
+@media (max-width: 480px) {
+    .product-grid {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .product-list-page {
+        padding: 10px;
+    }
+
+    .filter-input{
+        width: 100%;
+    }
+}
