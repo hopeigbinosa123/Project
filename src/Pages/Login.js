@@ -17,7 +17,26 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state
     const [error, setError] = useState(''); // Add error state to handle login errors
+    const [loginError, setLoginError] = useState('')
     const navigate = useNavigate();
+
+    const validateForm = () =>{
+        let formError = {};
+        let valid = true;
+        if(!email){
+            formError.email = 'Email is required';
+            valid = false;
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            formError.email = 'Invalid email format';
+            valid = false;
+        }
+        if(!password){
+            formError.password = 'Password is required';
+            valid = false;
+        }
+        setError(formErrors);
+        return valid;
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -52,6 +71,7 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)} 
                     required 
                 />
+                {errors.email && <div className="error-message">{errors.email}</div>}
                 <input 
                     type="password" 
                     placeholder="Password" 
@@ -59,9 +79,11 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)} 
                     required 
                 />
+                {errors.password && <div className="error-message">{errors.password}</div>}
                 <button type="submit" disabled={loading}> 
                     {loading ? 'Logging in...' : 'Login'} 
                 </button> {/* Disable button while loading */}
+                {loginError && <div className="error-message">{loginError}</div>}
                 <p>Don't have an account? <a href="/register">Register</a></p>
             </form>
         </div>

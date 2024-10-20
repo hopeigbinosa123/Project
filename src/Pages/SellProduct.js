@@ -17,7 +17,32 @@ const SellProduct = () => {
         const [productDescription, setProductDescription] = useState('');
         const [productPrice, setProductPrice] = useState('');
         const [productImage, setProductImage] = useState(null);
-        const [error, setError] = useState('');
+        const [error, setError] = useState({});
+        const [successMessage, setSuccessMessage] = useState('');
+
+        const validateForm = () => {
+            let formIsValid = true;
+            let error = {};
+            if(!productName){
+                formIsValid = false;
+                error['productName'] = 'Product Name is required.';
+            }
+            if (!productDescription){
+                formIsValid = false;
+                error['productDescription'] = 'Product Description is required.';
+            }
+            if(isNaN(productPrice)|| !productPrice){
+                formIsValid = false;
+                error['productPrice'] = 'Invalid price';
+            }
+
+            if(!productImage){
+                formIsValid = false;
+                error['productImage'] = 'Product Image is required.';
+            }
+            setError(error);
+            return formIsValid;
+        }
 
         const handleSellProduct = async (e) =>{
             e.preventDefault();
@@ -48,9 +73,13 @@ const SellProduct = () => {
                 <h2>Sell a Product</h2>
                 <form onSubmit={handleSellProduct}>
                     <input type='text' placeholder='Product Name' value={productName} onChange={(e) => setproduct(e.target.value)} required/>
+                    {errors.productName && <div className='error-message'>{errors.productName}</div>}
                     <input type='text' placeholder='Product Description' value={productDescription} onChange={(e) => setProductDescription(e.target.value)} required/>
+                    {errors.productDescription && <div className='error-message'>{errors.productDescription}</div>}
                     <input type='number' placeholder='Product Price' value={productPrice} onChange={(e) => setProductPrice(e.target.value)} required/>
+                    {errors.productPrice && <div className='error-message'>{errors.productPrice}</div>}
                     <input type='file' onChange={(e) => setProductImage(e.target.files[0])} required/>
+                    {errors.productImage && <div className='error-message'>{errors.productImage}</div>}
                     <button type='submit'>Sell Product</button>
                 </form>
                 <p>Note: Images should be at least 500x500 pixels and under 2MB in size.</p>
